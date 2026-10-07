@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOVE SHOP - ร้านค้าแห่งความรัก</title>
+  
+  <!-- Google Fonts: Kanit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome สำหรับไอคอน -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Welcome Code Modal (ขึ้นกลางหน้าจอเมื่อเปิดเว็บ) -->
+  <div id="welcome-modal" class="modal-overlay" style="display: flex;">
+    <div class="modal-card text-center">
+      <div class="heart-icon-header"><i class="fa-solid fa-heart-pulse"></i></div>
+      <h2>ยินดีต้อนรับสู่ LOVE SHOP</h2>
+      <p style="margin-bottom: 15px; color: #884455;">กรอกโค้ดเพื่อรับหัวใจฟรีสำหรับเริ่มใช้งาน!</p>
+      <form onsubmit="handleWelcomeCodeSubmit(event)">
+        <div class="input-group">
+          <i class="fa-solid fa-ticket"></i>
+          <input type="text" id="welcome-code-input" placeholder="กรอกโค้ด xxxxxxxx เพื่อรับหัวใจ" required>
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+          <button type="button" class="btn-secondary full-width" onclick="closeWelcomeModal()">ข้ามไปก่อน</button>
+          <button type="submit" class="btn-primary full-width">รับหัวใจ ❤️</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <div class="logo-icon"><i class="fa-solid fa-heart"></i></div>
+        <div class="logo-text">
+          <span>LOVE SHOP</span>
+          <span class="sub">HEART STORE</span>
+        </div>
+      </div>
+
+      <!-- User Section & Heart Display -->
+      <div class="user-section">
+        <button class="btn-wheel" onclick="openWheelModal()">
+          <i class="fa-solid fa-dharmachakra"></i> วงล้อเสี่ยงโชค
+        </button>
+
+        <div class="heart-badge" onclick="openTopupModal()">
+          <i class="fa-solid fa-heart"></i>
+          <span id="heart-display">0 ❤️</span>
+          <i class="fa-solid fa-circle-plus add-icon"></i>
+        </div>
+
+        <button class="btn-icon-mail" onclick="openInboxModal()" title="กล่องจดหมาย">
+          <i class="fa-solid fa-envelope"></i>
+          <span id="inbox-badge" class="badge-count" style="display:none;">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="main-container">
+    
+    <!-- PAGE: หน้าร้านค้า (Shop Page) -->
+    <section id="page-shop">
+      <div class="hero-banner">
+        <h2><i class="fa-solid fa-heart"></i> สินค้าแนะนำแห่งความรัก <i class="fa-solid fa-heart"></i></h2>
+        <p style="color: #a8556f; font-size: 0.95rem;">เลือกซื้อสินค้าพิเศษด้วยหัวใจของคุณ</p>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="product-list" class="product-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: เติมเงินด้วยโค้ด -->
+  <div id="topup-modal" class="modal-overlay">
+    <div class="modal-card text-center">
+      <button class="close-btn" onclick="closeTopupModal()">&times;</button>
+      <h2><i class="fa-solid fa-key" style="color:#ff4081;"></i> เติมหัวใจด้วยโค้ด</h2>
+      <p style="color: #884455; font-size: 0.9rem; margin-bottom: 15px;">กรอกรหัสโค้ดเพื่อรับหัวใจเข้าระบบ</p>
+      <form onsubmit="handleTopupCodeSubmit(event)">
+        <div class="input-group">
+          <i class="fa-solid fa-ticket"></i>
+          <input type="text" id="topup-code-input" placeholder="ใส่โค้ดเติมเงินที่นี่" required>
+        </div>
+        <p class="hint-text">* โค้ดทดสอบ: LOVE100, LOVE500, LOVE1000</p>
+        <button type="submit" class="btn-primary full-width">ใช้โค้ดเติมหัวใจ ❤️</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ยืนยันการสั่งซื้อ -->
+  <div id="confirm-buy-modal" class="modal-overlay">
+    <div class="modal-card text-center">
+      <button class="close-btn" onclick="closeConfirmBuyModal()">&times;</button>
+      <div style="font-size: 3rem; color: #ff4081; margin-bottom: 10px;">
+        <i class="fa-solid fa-heart-circle-check"></i>
+      </div>
+      <h3>ยืนยันการสั่งซื้อ</h3>
+      <p style="color: #884455; font-size: 0.95rem; margin-bottom: 5px;">คุณต้องการแลกสินค้านี้ด้วยหัวใจใช่หรือไม่?</p>
+      
+      <div style="background: #fff0f5; border: 1px dashed #ff80ab; padding: 12px; border-radius: 12px; margin: 15px 0;">
+        <div id="buy-modal-title" style="font-weight: 600; color: #4a1525; font-size: 1rem;">ชื่อสินค้า</div>
+        <div id="buy-modal-price" style="font-size: 1.2rem; font-weight: 700; color: #d81b60; margin-top: 4px;">0 ❤️</div>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button class="btn-secondary" style="flex: 1;" onclick="closeConfirmBuyModal()">ยกเลิก</button>
+        <button class="btn-primary" style="flex: 1;" onclick="executePurchase()">ยืนยันแลกสินค้า</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: กล่องจดหมาย (Inbox) -->
+  <div id="inbox-modal" class="modal-overlay">
+    <div class="modal-card large">
+      <button class="close-btn" onclick="closeInboxModal()">&times;</button>
+      <div class="inbox-header">
+        <i class="fa-solid fa-envelope-open-text avatar"></i>
+        <div>
+          <h2>กล่องจดหมายของคุณ</h2>
+          <p>รายการสินค้าและรหัสไอดีที่คุณได้รับจากการสั่งซื้อ</p>
+        </div>
+      </div>
+
+      <div class="history-container">
+        <div id="inbox-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: วงล้อเสี่ยงโชค -->
+  <div id="wheel-modal" class="modal-overlay">
+    <div class="modal-card text-center">
+      <button class="close-btn" onclick="closeWheelModal()">&times;</button>
+      <h2 style="color: #d81b60; margin-bottom: 5px;"><i class="fa-solid fa-dharmachakra"></i> วงล้อเสี่ยงโชคความรัก</h2>
+      <p style="font-size: 0.85rem; color: #884455; margin-bottom: 15px;">หมุนวงล้อเพื่อลุ้นรับหัวใจฟรี (10, 50, 100, 1000 ❤️)</p>
+      
+      <div class="wheel-container">
+        <div class="wheel-pointer">▼</div>
+        <canvas id="wheel-canvas" width="280" height="280"></canvas>
+      </div>
+
+      <button id="spin-btn" class="btn-primary full-width" style="margin-top: 15px;" onclick="spinWheel()">
+        <i class="fa-solid fa-play"></i> หมุนวงล้อ
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: หัวใจไม่เพียงพอ -->
+  <div id="no-heart-modal" class="modal-overlay">
+    <div class="modal-card text-center">
+      <div style="font-size: 3.5rem; color: #ff1744; margin-bottom: 10px;">
+        <i class="fa-solid fa-heart-crack"></i>
+      </div>
+      <h3>หัวใจของคุณไม่เพียงพอ!</h3>
+      <p style="color: #884455; font-size: 0.95rem; margin-bottom: 20px;">
+        คุณมีหัวใจไม่พอสำหรับแลกซื้อสินค้านี้ กรุณากรอกโค้ดเติมหัวใจก่อนทำรายการ
+      </p>
+      
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-secondary" style="flex: 1;" onclick="closeNoHeartModal()">ยกเลิก</button>
+        <button class="btn-primary" style="flex: 1;" onclick="goToTopupFromModal()">ไปกรอกโค้ด</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="database.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
