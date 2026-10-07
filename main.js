@@ -66,22 +66,7 @@ function showToast(message, type = 'success') {
   setTimeout(() => toast.remove(), 3500);
 }
 
-// ---------------- WELCOME & TOPUP CODES ----------------
-function closeWelcomeModal() {
-  document.getElementById('welcome-modal').style.display = 'none';
-}
-
-function handleWelcomeCodeSubmit(e) {
-  e.preventDefault();
-  const codeInput = document.getElementById('welcome-code-input').value.trim();
-  if (codeInput) {
-    userHearts += 100;
-    updateHeartUI();
-    showToast("รับหัวใจฟรีสำเร็จ! คุณได้รับ 100 ❤️", "success");
-    closeWelcomeModal();
-  }
-}
-
+// ---------------- TOPUP CODES ----------------
 function openTopupModal() {
   document.getElementById('topup-modal').style.display = 'flex';
 }
@@ -179,19 +164,20 @@ function executePurchase() {
   products[productIndex].stock = Math.max(0, product.stock - 1);
   saveProducts(products);
 
-  // เพิ่มลงกล่องจดหมาย (Inbox)
+  // เพิ่มสินค้าลงกล่องจดหมาย (Inbox)
   userInbox.unshift({
     title: product.title,
     price: product.price,
     details: product.details || 'LOVE-ITEM-XXXX',
-    date: new Date().toLocaleString('th-TH')
+    date: new Date().toLocaleString('th-TH'),
+    type: 'purchase'
   });
   localStorage.setItem('user_inbox', JSON.stringify(userInbox));
 
   updateHeartUI();
   closeConfirmBuyModal();
   renderProducts();
-  showToast("สั่งซื้อสำเร็จ! ดูรหัสไอดีได้ที่กล่องจดหมาย", "success");
+  showToast("สั่งซื้อสำเร็จ! ดูรายละเอียดได้ที่กล่องจดหมาย", "success");
 }
 
 function closeNoHeartModal() {
@@ -212,11 +198,11 @@ function openInboxModal() {
     inboxList.innerHTML = userInbox.map(item => `
       <div class="history-item">
         <div>
-          <div class="item-title">${item.title}</div>
+          <div class="item-title">${item.type === 'reward' ? '🎁 รางวัลจากวงล้อ: ' : ''}${item.title}</div>
           <div class="item-date">${item.date}</div>
-          <div class="item-code"><i class="fa-solid fa-key"></i> รหัสสินค้า/ไอดี: ${item.details}</div>
+          <div class="item-code"><i class="fa-solid fa-gift"></i> โค้ด/รหัสรับรางวัล: ${item.details}</div>
         </div>
-        <div style="color:#d81b60; font-weight:bold;">-${item.price} ❤️</div>
+        <div style="color:#d81b60; font-weight:bold;">${item.price ? '-' + item.price + ' ❤️' : 'ฟรี'}</div>
       </div>
     `).join('');
   }
@@ -227,8 +213,13 @@ function closeInboxModal() {
   document.getElementById('inbox-modal').style.display = 'none';
 }
 
-// ---------------- WHEEL SYSTEM ----------------
-const prizes = [10, 50, 100, 1000];
+// ---------------- WHEEL SYSTEM (ปรับการให้รางวัลเข้ากล่องจดหมาย) ----------------
+const prizes = [
+  { name: 'รางวัลเงิน 1,000 บาท', code: 'REWARD-1000-LOVE' },
+  { name: 'รางวัลเงิน 100 บาท', code: 'REWARD-100-LOVE' },
+  { name: 'รางวัลเงิน 50 บาท', code: 'REWARD-50-LOVE' },
+  { name: 'รางวัลเงิน 10 บาท', code: 'REWARD-10-LOVE' }
+];
 const colors = ['#ff80ab', '#ff4081', '#f50057', '#c2185b'];
 let isSpinning = false;
 
@@ -240,7 +231,7 @@ function drawWheel() {
 
   ctx.clearRect(0, 0, 280, 280);
 
-  prizes.forEach((prize, i) => {
+  prizes.forEach((prizeObj, i) => {
     const angle = i * sliceAngle;
     ctx.beginPath();
     ctx.fillStyle = colors[i % colors.length];
@@ -249,14 +240,14 @@ function drawWheel() {
     ctx.lineTo(140, 140);
     ctx.fill();
 
-    // วาดข้อความรางวัล
+    // ข้อความรางวัล
     ctx.save();
     ctx.translate(140, 140);
     ctx.rotate(angle + sliceAngle / 2);
     ctx.textAlign = "right";
     ctx.fillStyle = "#ffffff";
-    ctx.font = "bold 16px Kanit";
-    ctx.fillText(`${prize} ❤️`, 110, 5);
+    ctx.font = "bold 13px Kanit";
+    ctx.fillText(prizeObj.name, 120, 4);
     ctx.restore();
   });
 }
@@ -281,10 +272,9 @@ function spinWheel() {
 
   const canvas = document.getElementById('wheel-canvas');
   const winIndex = Math.floor(Math.random() * prizes.length);
-  const prize = prizes[winIndex];
+  const prizeObj = prizes[winIndex];
 
   const sliceAngle = 360 / prizes.length;
-  // หมุน 5 รอบ + มุมของช่องรางวัล
   const targetDegree = 360 * 5 + (360 - (winIndex * sliceAngle + sliceAngle / 2));
 
   let currentDegree = 0;
@@ -302,9 +292,19 @@ function spinWheel() {
     if (currentDegree >= targetDegree) {
       clearInterval(spinInterval);
       playWinSound();
-      userHearts += prize;
+
+      // บันทึกของรางวัลลงในกล่องจดหมาย (Inbox)
+      userInbox.unshift({
+        title: prizeObj.name,
+        price: 0,
+        details: prizeObj.code,
+        date: new Date().toLocaleString('th-TH'),
+        type: 'reward'
+      });
+      localStorage.setItem('user_inbox', JSON.stringify(userInbox));
       updateHeartUI();
-      showToast(`ยินดีด้วย! คุณได้รับรางวัล ${prize} ❤️`, "success");
+
+      showToast(`ยินดีด้วย! คุณได้รับ "${prizeObj.name}" เช็กได้ที่กล่องจดหมาย`, "success");
 
       spinBtn.disabled = false;
       spinBtn.innerHTML = `<i class="fa-solid fa-play"></i> หมุนวงล้อ`;
@@ -318,3 +318,4 @@ document.addEventListener('DOMContentLoaded', () => {
   updateHeartUI();
   renderProducts();
 });
+
