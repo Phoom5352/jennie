@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Font Awesome สำหรับไอคอน -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <link rel="stylesheet" href="style.css">
@@ -20,26 +20,7 @@
   <!-- Toast Notification Container -->
   <div id="toast-container"></div>
 
-  <!-- Welcome Code Modal (ขึ้นกลางหน้าจอเมื่อเปิดเว็บ) -->
-  <div id="welcome-modal" class="modal-overlay" style="display: flex;">
-    <div class="modal-card text-center">
-      <div class="heart-icon-header"><i class="fa-solid fa-heart-pulse"></i></div>
-      <h2>ยินดีต้อนรับสู่ LOVE SHOP</h2>
-      <p style="margin-bottom: 15px; color: #884455;">กรอกโค้ดเพื่อรับหัวใจฟรีสำหรับเริ่มใช้งาน!</p>
-      <form onsubmit="handleWelcomeCodeSubmit(event)">
-        <div class="input-group">
-          <i class="fa-solid fa-ticket"></i>
-          <input type="text" id="welcome-code-input" placeholder="กรอกโค้ด xxxxxxxx เพื่อรับหัวใจ" required>
-        </div>
-        <div style="display: flex; gap: 10px; margin-top: 15px;">
-          <button type="button" class="btn-secondary full-width" onclick="closeWelcomeModal()">ข้ามไปก่อน</button>
-          <button type="submit" class="btn-primary full-width">รับหัวใจ ❤️</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Navigation Bar -->
+  <!-- Navigation Bar (ปรับการจัดเรียงบนมือถือใหม่) -->
   <nav class="navbar">
     <div class="nav-container">
       <div class="logo">
@@ -50,10 +31,11 @@
         </div>
       </div>
 
-      <!-- User Section & Heart Display -->
+      <!-- User Section & Actions -->
       <div class="user-section">
         <button class="btn-wheel" onclick="openWheelModal()">
-          <i class="fa-solid fa-dharmachakra"></i> วงล้อเสี่ยงโชค
+          <i class="fa-solid fa-dharmachakra"></i>
+          <span>วงล้อเสี่ยงโชค</span>
         </button>
 
         <div class="heart-badge" onclick="openTopupModal()">
@@ -73,7 +55,7 @@
   <!-- Main Content Area -->
   <main class="main-container">
     
-    <!-- PAGE: หน้าร้านค้า (Shop Page) -->
+    <!-- PAGE: หน้าร้านค้า -->
     <section id="page-shop">
       <div class="hero-banner">
         <h2><i class="fa-solid fa-heart"></i> สินค้าแนะนำแห่งความรัก <i class="fa-solid fa-heart"></i></h2>
@@ -133,7 +115,7 @@
         <i class="fa-solid fa-envelope-open-text avatar"></i>
         <div>
           <h2>กล่องจดหมายของคุณ</h2>
-          <p>รายการสินค้าและรหัสไอดีที่คุณได้รับจากการสั่งซื้อ</p>
+          <p>รายการสินค้าและของรางวัลจากวงล้อสุ่ม</p>
         </div>
       </div>
 
@@ -148,7 +130,7 @@
     <div class="modal-card text-center">
       <button class="close-btn" onclick="closeWheelModal()">&times;</button>
       <h2 style="color: #d81b60; margin-bottom: 5px;"><i class="fa-solid fa-dharmachakra"></i> วงล้อเสี่ยงโชคความรัก</h2>
-      <p style="font-size: 0.85rem; color: #884455; margin-bottom: 15px;">หมุนวงล้อเพื่อลุ้นรับหัวใจฟรี (10, 50, 100, 1000 ❤️)</p>
+      <p style="font-size: 0.85rem; color: #884455; margin-bottom: 15px;">หมุนสุ่มเพื่อลุ้นรับของรางวัลส่งตรงไปยังกล่องจดหมาย!</p>
       
       <div class="wheel-container">
         <div class="wheel-pointer">▼</div>
