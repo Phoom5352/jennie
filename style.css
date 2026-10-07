@@ -39,28 +39,30 @@ body {
 .nav-container {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 12px 20px;
+  padding: 10px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .logo-icon {
   background: var(--primary-hover);
   color: white;
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   box-shadow: 0 4px 10px rgba(255, 64, 129, 0.3);
 }
 
@@ -69,42 +71,44 @@ body {
   font-weight: 700;
   line-height: 1.1;
   color: var(--primary-dark);
+  font-size: 0.95rem;
 }
 
 .logo-text .sub {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
 }
 
-/* User Section & หัวใจ */
+/* User Section & Heart Badge Layout (แก้การจัดเรียงวงสีแดง) */
 .user-section {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  flex-wrap: nowrap;
 }
 
 .heart-badge {
   background: #ffe4ec;
   color: var(--accent-pink);
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 20px;
   font-weight: 600;
+  font-size: 0.85rem;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   white-space: nowrap;
-  transition: all 0.2s ease;
   border: 1px solid var(--border-color);
+  transition: 0.2s;
 }
 
 .heart-badge:hover {
   background: #ffd1dc;
-  transform: translateY(-1px);
 }
 
 .heart-badge .add-icon {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--primary-hover);
 }
 
@@ -112,35 +116,37 @@ body {
   background: linear-gradient(135deg, #ff4081, #d81b60);
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 20px;
   font-weight: 600;
+  font-size: 0.85rem;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
-  box-shadow: 0 4px 12px rgba(216, 27, 96, 0.25);
+  gap: 5px;
+  white-space: nowrap;
+  box-shadow: 0 4px 10px rgba(216, 27, 96, 0.25);
   transition: all 0.2s;
 }
 
 .btn-wheel:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(216, 27, 96, 0.35);
+  transform: scale(1.03);
 }
 
 .btn-icon-mail {
   background: #ffe4ec;
   color: var(--primary-dark);
   border: 1px solid var(--border-color);
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
   position: relative;
+  flex-shrink: 0;
   transition: 0.2s;
 }
 
@@ -154,10 +160,10 @@ body {
   right: -4px;
   background: var(--accent-red);
   color: white;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: bold;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -179,8 +185,6 @@ body {
 
 .btn-primary:hover {
   background: var(--primary-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255, 64, 129, 0.35);
 }
 
 .btn-secondary {
@@ -194,39 +198,35 @@ body {
   transition: 0.2s;
 }
 
-.btn-secondary:hover {
-  background: #f48fb1;
-}
-
-/* Layout */
+/* Layout & Grid */
 .main-container {
   max-width: 1100px;
-  margin: 30px auto;
-  padding: 0 20px;
+  margin: 20px auto;
+  padding: 0 15px;
 }
 
 .hero-banner {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .hero-banner h2 {
   font-weight: 600;
   color: var(--primary-dark);
-  font-size: 1.8rem;
+  font-size: 1.5rem;
 }
 
-/* Product Grid */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
 }
 
+/* Card และแก้รูปภาพสินค้าให้แสดงเต็มอัตราส่วน (วงสีเขียว) */
 .product-card {
   background: var(--card-bg);
   border-radius: var(--radius);
-  padding: 15px;
+  padding: 12px;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
@@ -236,22 +236,23 @@ body {
 }
 
 .product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 28px rgba(216, 27, 96, 0.18);
+  transform: translateY(-3px);
 }
 
 .product-img {
   width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 12px;
+  height: 200px; /* ปรับเพิ่มความสูงเพื่อให้เห็นรูปเต็มๆ */
+  object-fit: contain; /* ปรับให้แสดงรูปเต็มภาพไม่โดนครอบตัด */
+  background-color: #fff0f5;
+  border-radius: 10px;
+  padding: 4px;
 }
 
 .price {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--accent-pink);
-  margin: 10px 0;
+  margin: 8px 0;
 }
 
 /* Modal Styling */
@@ -277,59 +278,35 @@ body {
 
 .modal-card {
   background: white;
-  padding: 30px;
+  padding: 24px;
   border-radius: 20px;
-  width: 90%;
-  max-width: 420px;
+  width: 92%;
+  max-width: 400px;
   position: relative;
   box-shadow: 0 10px 30px rgba(194, 24, 91, 0.2);
   border: 2px solid var(--border-color);
-  animation: scaleUp 0.25s ease;
-}
-
-@keyframes scaleUp {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
 }
 
 .modal-card.large {
-  max-width: 600px;
+  max-width: 550px;
 }
 
 .text-center {
   text-align: center;
 }
 
-.heart-icon-header {
-  font-size: 3.5rem;
-  color: var(--primary-hover);
-  margin-bottom: 10px;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
 .close-btn {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: 14px;
+  right: 14px;
   border: none;
   background: #ffe4ec;
   color: var(--primary-dark);
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: 0.2s;
-}
-
-.close-btn:hover {
-  background: #ffd1dc;
 }
 
 .input-group {
@@ -339,22 +316,16 @@ body {
 
 .input-group input {
   width: 100%;
-  padding: 12px 12px 12px 40px;
+  padding: 10px 10px 10px 38px;
   border: 1.5px solid var(--border-color);
   border-radius: 12px;
   outline: none;
-  font-size: 0.95rem;
-  transition: 0.2s;
-}
-
-.input-group input:focus {
-  border-color: var(--primary-hover);
-  box-shadow: 0 0 0 3px rgba(255, 64, 129, 0.2);
+  font-size: 0.9rem;
 }
 
 .input-group i {
   position: absolute;
-  left: 14px;
+  left: 12px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--text-muted);
@@ -367,26 +338,26 @@ body {
 .hint-text {
   font-size: 0.8rem;
   color: var(--text-muted);
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
-/* Inbox Header & List */
+/* Inbox Styling */
 .inbox-header {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 15px;
   border-bottom: 1px dashed var(--border-color);
-  padding-bottom: 15px;
+  padding-bottom: 12px;
 }
 
 .inbox-header .avatar {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: var(--primary-hover);
 }
 
 .history-container {
-  max-height: 300px;
+  max-height: 280px;
   overflow-y: auto;
 }
 
@@ -394,23 +365,23 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  margin-bottom: 10px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
   background: #fff0f5;
   border-radius: 12px;
   border: 1px solid var(--border-color);
 }
 
-.item-title { font-weight: 600; color: var(--primary-dark); }
-.item-date { font-size: 0.75rem; color: var(--text-muted); }
+.item-title { font-weight: 600; color: var(--primary-dark); font-size: 0.95rem; }
+.item-date { font-size: 0.7rem; color: var(--text-muted); }
 .item-code {
   font-family: monospace;
   background: #ffffff;
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 6px;
-  margin-top: 5px;
+  margin-top: 4px;
   display: inline-block;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #c2185b;
   border: 1px solid var(--border-color);
 }
@@ -418,25 +389,24 @@ body {
 /* Wheel Style */
 .wheel-container {
   position: relative;
-  width: 280px;
-  height: 280px;
+  width: 260px;
+  height: 260px;
   margin: 0 auto;
 }
 
 .wheel-pointer {
   position: absolute;
-  top: -12px;
+  top: -10px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: var(--accent-red);
   z-index: 10;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 #wheel-canvas {
-  width: 280px;
-  height: 280px;
+  width: 260px;
+  height: 260px;
   border-radius: 50%;
   box-shadow: 0 6px 18px rgba(194, 24, 91, 0.25);
 }
@@ -444,15 +414,15 @@ body {
 /* Toast Container */
 #toast-container {
   position: fixed;
-  top: 20px;
+  top: 15px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   width: 90%;
-  max-width: 380px;
+  max-width: 360px;
   pointer-events: none;
 }
 
@@ -460,23 +430,35 @@ body {
   pointer-events: auto;
   background: #ffffff;
   color: var(--text-color);
-  padding: 12px 16px;
-  border-radius: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  box-shadow: 0 10px 25px rgba(216, 27, 96, 0.15);
+  gap: 10px;
+  box-shadow: 0 8px 20px rgba(216, 27, 96, 0.15);
   border: 1px solid var(--border-color);
-  font-size: 0.9rem;
-  animation: toastIn 0.3s ease;
+  font-size: 0.85rem;
 }
 
-.toast.error { border-left: 5px solid var(--accent-red); }
-.toast.success { border-left: 5px solid #4caf50; }
-.toast.error i { color: var(--accent-red); }
-.toast.success i { color: #4caf50; }
+.toast.error { border-left: 4px solid var(--accent-red); }
+.toast.success { border-left: 4px solid #4caf50; }
 
-@keyframes toastIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Responsive adjustments for Mobile */
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 8px 10px;
+  }
+
+  .logo-text {
+    display: none; /* ซ่อนเท็กซ์โลโก้บนมือถือหน้าจอแคบเพื่อประหยัดพื้นที่ */
+  }
+
+  .btn-wheel span {
+    display: inline-block;
+    font-size: 0.75rem;
+  }
+  
+  .product-img {
+    height: 180px;
+  }
 }
